@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Die Laborgeraete im Fach Chemie</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+        }
+        
+        .header h1 {
+            color: #00ffff;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            font-weight: 700;
+            text-shadow: 0 0 20px #00ffff;
+            letter-spacing: 2px;
+        }
+        
+        .intro-text {
+            background: rgba(15, 15, 35, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #00ffff;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+        
+        .section {
+            background: rgba(26, 26, 46, 0.9);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .section h2 {
+            color: #8a2be2;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px #8a2be2;
+        }
+        
+        select {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 16px;
+            background: rgba(15, 15, 35, 0.9);
+            border: 2px solid rgba(0, 255, 255, 0.4);
+            border-radius: 12px;
+            color: #00ffff;
+        }
+        
+        .equipment-image {
+            text-align: center;
+            margin: 25px 0;
+            padding: 25px;
+            background: rgba(15, 15, 35, 0.8);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            display: none;
+        }
+        
+        .equipment-image img {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: contain;
+            filter: 
+                drop-shadow(0 0 10px rgba(0, 255, 255, 0.5))
+                brightness(1.1)
+                contrast(1.2);
+        }
+        
+        .equipment-info {
+            background: rgba(15, 15, 35, 0.9);
+            border: 2px solid rgba(0, 255, 128, 0.4);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            display: none;
+        }
+        
+        .equipment-info h3 {
+            color: #00ff80;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            text-shadow: 0 0 5px #00ff80;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .equipment-info p {
+            color: #b8f5d1;
+            line-height: 1.8;
+            margin: 0;
+        }
+        
+        .overview-toggle {
+            background: linear-gradient(135deg, #8a2be2 0%, #4c1d95 100%);
+            color: #e2e8f0;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid rgba(138, 43, 226, 0.5);
+        }
+        
+        .overview-content {
+            display: none;
+            background: rgba(15, 15, 35, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .equipment-item {
+            background: rgba(15, 15, 35, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 13px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+        }
+        
+        .task-section {
+            background: rgba(26, 26, 46, 0.9);
+            border: 2px solid rgba(255, 165, 0, 0.4);
+        }
+        
+        .task-section h2 {
+            color: #ffa500;
+            text-shadow: 0 0 10px #ffa500;
+        }
+        
+        .random-generator {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .random-generator::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            border: 1px solid rgba(255, 165, 0, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse-ring 2s ease-out infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        .random-button {
+            background: 
+                radial-gradient(circle at 30% 30%, #ff6b6b, #ee5a52),
+                linear-gradient(145deg, #ff6b6b, #ee5a52);
+            color: #1a1a1a;
+            border: none;
+            padding: 0;
+            border-radius: 50%;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            width: 120px;
+            height: 120px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 10px 20px rgba(238, 90, 82, 0.4),
+                0 0 30px rgba(238, 90, 82, 0.2);
+            border: 3px solid #ffffff;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+            z-index: 2;
+        }
+        
+        .random-button::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), transparent 50%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .random-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: rotate 3s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .random-button:hover {
+            background: 
+                radial-gradient(circle at 30% 30%, #ff5252, #d32f2f),
+                linear-gradient(145deg, #ff5252, #d32f2f);
+            transform: scale(1.2) rotate(10deg);
+            box-shadow: 
+                0 15px 30px rgba(238, 90, 82, 0.6),
+                0 0 40px rgba(238, 90, 82, 0.4);
+            animation: techPulse 0.6s ease-in-out;
+        }
+        
+        @keyframes techPulse {
+            0%, 100% { 
+                box-shadow: 0 15px 30px rgba(238, 90, 82, 0.6), 0 0 40px rgba(238, 90, 82, 0.4);
+            }
+            50% { 
+                box-shadow: 0 20px 40px rgba(238, 90, 82, 0.8), 0 0 60px rgba(238, 90, 82, 0.6);
+            }
+        }
+        
+        .name-field {
+            background: rgba(15, 15, 35, 0.9);
+            border: 3px solid rgba(0, 255, 255, 0.5);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #00ffff;
+            min-height: 35px;
+            text-shadow: 0 0 10px #00ffff;
+            letter-spacing: 2px;
+        }
+        
+        .drawing-area {
+            border: 3px solid rgba(0, 255, 255, 0.5);
+            border-radius: 15px;
+            margin: 25px 0;
+            background: rgba(15, 15, 35, 0.8);
+        }
+        
+        #drawingCanvas {
+            border-radius: 12px;
+            cursor: crosshair;
+        }
+        
+        .drawing-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 20px;
+            background: rgba(15, 15, 35, 0.8);
+            border-radius: 15px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .tool-group {
+            display: flex;
+            gap: 8px;
+            background: rgba(15, 15, 35, 0.8);
+            padding: 8px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        
+        .tool-btn {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            background: rgba(15, 15, 35, 0.8);
+            color: #00ffff;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .tool-btn.active {
+            background: linear-gradient(135deg, #00ffff 0%, #008080 100%);
+            color: #000;
+            border-color: #00ffff;
+            font-weight: 700;
+        }
+        
+        .clear-btn {
+            background: linear-gradient(135deg, #ff4757 0%, #c44569 100%);
+            color: white;
+            border: 2px solid rgba(255, 71, 87, 0.5);
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .export-btn {
+            background: linear-gradient(135deg, #00ff80 0%, #00cc66 100%);
+            color: #000;
+            border: 2px solid rgba(0, 255, 128, 0.5);
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .color-picker {
+            width: 60px;
+            height: 40px;
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent;
+        }
+        
+        .size-slider {
+            width: 120px;
+            height: 8px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, rgba(0, 255, 255, 0.2) 0%, rgba(0, 255, 255, 0.8) 100%);
+            outline: none;
+        }
+        
+        .instructions {
+            background: rgba(15, 15, 35, 0.8);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            color: #ffcc80;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧪 Die Laborgeraete im Fach Chemie</h1>
+    </div>
+    
+    <div class="intro-text">
+        <p><strong>Willkommen zum interaktiven Arbeitsblatt ueber Laborgeraete!</strong></p>
+        <p>Laborgeraete sind unverzichtbare Werkzeuge in der Chemie. Sie ermoeglichen es uns, Stoffe zu mischen, zu erhitzen, zu messen und zu analysieren. Jedes Geraet hat eine spezielle Funktion und Form, die fuer bestimmte Experimente und Verfahren optimiert ist. In der Schulchemie lernst du die wichtigsten Grundgeraete kennen, die du fuer sicheres und erfolgreiches Experimentieren benoetigst.</p>
+    </div>
+    
+    <div class="section">
+        <h2>🔍 Lerne die Laborgeraete kennen</h2>
+        
+        <div class="dropdown-container">
+            <select id="equipmentDropdown" onchange="showEquipmentInfo()">
+                <option value="">Waehle ein Laborgeraet aus...</option>
+            </select>
+        </div>
+        
+        <div class="equipment-image" id="equipmentImage">
+            <img id="equipmentImg" src="" alt="" />
+        </div>
+        
+        <div class="equipment-info" id="equipmentInfo">
+            <h3 id="equipmentTitle"></h3>
+            <p id="equipmentDescription"></p>
+        </div>
+        
+        <button class="overview-toggle" onclick="toggleOverview()">
+            📋 Komplette Uebersicht aller Laborgeraete anzeigen
+        </button>
+        
+        <div class="overview-content" id="overviewContent">
+            <h3>Alle Laborgeraete der Schulchemie:</h3>
+            <div class="equipment-grid" id="equipmentGrid"></div>
+        </div>
+    </div>
+    
+    <div class="section task-section">
+        <h2>📝 Aufgaben</h2>
+        
+        <div class="instructions">
+            <strong>Anleitung:</strong> Starte den Zufallsgenerator unten. Im Namensfeld erscheint dann der Name eines Laborgeraets. Zeichne das entsprechende Laborgeraet auf die Leinwand und druecke dann den PDF-Export-Button, um den Namen und deine Zeichnung als PDF zu exportieren.
+        </div>
+        
+        <div class="random-generator">
+            <button class="random-button" onclick="generateRandomEquipment()" title="Zufallsgenerator starten">
+                ❓
+            </button>
+            <p><em>Klicke auf das Fragezeichen fuer ein zufaelliges Laborgeraet!</em></p>
+        </div>
+        
+        <div class="name-field" id="nameField">
+            Hier erscheint der Name des Laborgeraets...
+        </div>
+        
+        <div class="drawing-controls">
+            <div class="tool-group">
+                <button class="tool-btn active" onclick="setTool('pen')" title="Freihand zeichnen">✏️ Stift</button>
+                <button class="tool-btn" onclick="setTool('line')" title="Gerade Linie">📏 Linie</button>
+                <button class="tool-btn" onclick="setTool('rectangle')" title="Rechteck">⬜ Rechteck</button>
+                <button class="tool-btn" onclick="setTool('triangle')" title="Dreieck">🔺 Dreieck</button>
+                <button class="tool-btn" onclick="setTool('trapez')" title="Trapez">🔶 Trapez</button>
+                <button class="tool-btn" onclick="setTool('ellipse')" title="Ellipse/Kreis">⭕ Ellipse</button>
+            </div>
+            <input type="color" class="color-picker" id="colorPicker" value="#ffffff" title="Farbe waehlen">
+            <input type="range" class="size-slider" id="sizeSlider" min="1" max="10" value="3" title="Linienstaerke">
+            <button class="clear-btn" onclick="clearCanvas()">🗑️ Loeschen</button>
+            <button class="export-btn" onclick="exportToPDF()">📄 PDF exportieren</button>
+        </div>
+        
+        <div class="drawing-area">
+            <canvas id="drawingCanvas"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        var laborEquipment = [
+            "Becherglas", "Reagenzglas", "Erlenmeyerkolben", "Rundkolben", "Stehkolben",
+            "Messzylinder", "Trichter", "Tropftrichter", "Gasbrenner", "Dreifuss",
+            "Stativstange", "Stativring", "Stativklammer", "Stativmuffe", "Stativplatte",
+            "Reagenzglasgestell", "Reagenzglasbuerste", "Reagenzglasklammer", "Spatel",
+            "Mineralfasernetz", "Schutzbrille", "Pneumatische Wanne", "Spritzflasche",
+            "Standzylinder", "Abdeckscheiben", "Verbrennungsloeffel", "Saugflasche",
+            "Gaswaschflasche", "Filternutsche", "Spitzkolben", "Liebigkuehler",
+            "Schlangenkuehler", "Wasserstrahlpumpe", "Buerette", "Pipette", "Thermometer",
+            "Porzellantiegel", "Porzellanschiffchen", "Tiegelzange", "Tondreieck",
+            "Abdampfschale", "Uhrglas", "Reibschale", "Pistill", "Saeurekappenflasche",
+            "U-Rohr", "Gummistopfen"
+        ];
+
+        var equipmentImages = {
+            "Becherglas": "Becherglas.png",
+            "Reagenzglas": "Reagenzglas.png",
+            "Erlenmeyerkolben": "Erlenmeyerkolbe.png",
+            "Rundkolben": "Rundkolben.png",
+            "Stehkolben": "Stehkolben.png",
+            "Messzylinder": "Messzylinder.png",
+            "Trichter": "Trichter.png",
+            "Tropftrichter": "Tropftrichter.png",
+            "Gasbrenner": "Gasbrenner.png",
+            "Dreifuss": "Dreifuss.png",
+            "Stativstange": "Stativstange.png",
+            "Stativring": "Stativring.png",
+            "Stativklammer": "Stativklammer.png",
+            "Stativmuffe": "Stativmuffe.png",
+            "Stativplatte": "Stativstange.png",
+            "Reagenzglasgestell": "Reagenzglasgestell.png",
+            "Reagenzglasbuerste": "Reagenzglasbuerste.png",
+            "Reagenzglasklammer": "Reagenzglasklammer.png",
+            "Spatel": "Spatel.png",
+            "Mineralfasernetz": "Mineralfasernetz.png",
+            "Schutzbrille": "Schutzbrille.png",
+            "Pneumatische Wanne": "Pneumatische_Wanne.png",
+            "Spritzflasche": "Spritzflasche.png",
+            "Standzylinder": "Standzylinder.png",
+            "Abdeckscheiben": "Abdeckscheiben.png",
+            "Verbrennungsloeffel": "Verbrennungsloeffel.png",
+            "Saugflasche": "Saugflasche.png",
+            "Gaswaschflasche": "Gaswaschflasche.png",
+            "Filternutsche": "Filternutsche.png",
+            "Spitzkolben": "Spitzkolben.png",
+            "Liebigkuehler": "Liebigkuehler.png",
+            "Schlangenkuehler": "Schlangenkuehler.png",
+            "Wasserstrahlpumpe": "Wasserstrahlpumpe.png",
+            "Buerette": "Buerette.png",
+            "Pipette": "Pipette.png",
+            "Thermometer": "Thermometer.png",
+            "Porzellantiegel": "Porzellantiegel.png",
+            "Porzellanschiffchen": "Porzellanschiffchen.png",
+            "Tiegelzange": "Tiegelzange.png",
+            "Tondreieck": "Tondreieck.png",
+            "Abdampfschale": "Abdampfschale.png",
+            "Uhrglas": "Uhrglas.png",
+            "Reibschale": "Reibschale.png",
+            "Pistill": "Pistill.png",
+            "Saeurekappenflasche": "Saeurekappenflasche.png",
+            "U-Rohr": "U-Rohr.png",
+            "Gummistopfen": "Gummistopfen.png"
+        };
+
+        var equipmentDescriptions = {
+            "Becherglas": "Ein zylindrisches Glasgefaess mit Ausguss. Wird zum Mischen, Erhitzen und Aufbewahren von Fluessigkeiten verwendet.",
+            "Reagenzglas": "Ein kleines, schlankes Glasroehrchen. Ideal fuer kleine Mengen von Reaktionen, Proben und Tests.",
+            "Erlenmeyerkolben": "Ein konischer Kolben mit engem Hals. Perfekt zum Mischen und Schuetteln von Loesungen.",
+            "Rundkolben": "Ein kugelfoermiger Kolben mit langem Hals. Hauptsaechlich fuer Destillationen verwendet.",
+            "Stehkolben": "Ein Rundkolben mit flachem Boden. Kann stabil stehen ohne umzufallen.",
+            "Messzylinder": "Ein schmales, hohes Glasgefaess mit Graduierung. Dient zur genauen Volumenmessung.",
+            "Trichter": "Ein kegelfoermiges Geraet zum Umfuellen ohne Verschuetten.",
+            "Tropftrichter": "Ein Trichter mit regulierbarem Ventil fuer kontrollierte Zugabe.",
+            "Gasbrenner": "Eine Heizquelle, die mit Gas betrieben wird. Erzeugt eine regulierbare Flamme.",
+            "Dreifuss": "Ein dreibeiniges Metallgestell als stabile Unterlage zum Erhitzen.",
+            "Stativstange": "Eine vertikale Metallstange als Grundlage fuer Stativaufbauten.",
+            "Stativring": "Ein Ring, der an der Stativstange befestigt wird zum Halten von Glasgeraeten.",
+            "Stativklammer": "Eine verstellbare Klammer fuer das Stativ zum Festhalten.",
+            "Stativmuffe": "Ein Verbindungsstueck zwischen Stativstange und anderen Stativteilen.",
+            "Stativplatte": "Eine schwere Metallplatte als Basis fuer das Stativ.",
+            "Reagenzglasgestell": "Eine Halterung fuer mehrere Reagenzglaeser zur sicheren Aufbewahrung.",
+            "Reagenzglasbuerste": "Eine schmale Buerste zur Reinigung von Reagenzglaesern.",
+            "Reagenzglasklammer": "Eine Klammer zum sicheren Greifen heisser Reagenzglaeser.",
+            "Spatel": "Ein kleines, flaches Werkzeug zum Abmessen kleiner Mengen fester Stoffe.",
+            "Mineralfasernetz": "Ein hitzebestaendiges Netz als Schutz zwischen Flamme und Glasgeraet.",
+            "Schutzbrille": "Eine Brille zum Schutz der Augen vor Chemikalienspritzern und Gefahren.",
+            "Pneumatische Wanne": "Ein wassergefuelltes Gefaess zum Auffangen von Gasen ueber Wasser.",
+            "Spritzflasche": "Eine Flasche mit Spruehvorrichtung fuer destilliertes Wasser.",
+            "Standzylinder": "Ein hoher, graduierter Zylinder mit Ausguss fuer Volumenmessungen.",
+            "Abdeckscheiben": "Runde Glasscheiben zum Abdecken und Schutz vor Verdunstung.",
+            "Verbrennungsloeffel": "Ein Loeffel mit langem Stiel zur Verbrennung kleiner Substanzmengen.",
+            "Saugflasche": "Eine dickwandige Glasflasche fuer Vakuumfiltration.",
+            "Gaswaschflasche": "Eine Flasche zur Reinigung oder Trocknung von Gasen.",
+            "Filternutsche": "Ein Trichter mit perforiertem Boden fuer die Vakuumfiltration.",
+            "Spitzkolben": "Ein Kolben mit spitzer, konischer Form fuer organische Chemie.",
+            "Liebigkuehler": "Ein Roehrenkuehler fuer Destillationen mit Wassermantel.",
+            "Schlangenkuehler": "Ein spiralfoermiger Kuehler mit grosser Oberflaeche.",
+            "Wasserstrahlpumpe": "Eine Pumpe, die mit Wasserdruck ein Vakuum erzeugt.",
+            "Buerette": "Ein graduiertes Glasrohr mit Hahn zur genauen Dosierung.",
+            "Pipette": "Ein Geraet zur genauen Aufnahme und Abgabe bestimmter Volumina.",
+            "Thermometer": "Ein Geraet zur Temperaturmessung bei Reaktionen.",
+            "Porzellantiegel": "Ein hitzebestaendiger Tiegel aus Porzellan fuer hohe Temperaturen.",
+            "Porzellanschiffchen": "Ein bootsfoermiges Porzellangefaess fuer Elementaranalysen.",
+            "Tiegelzange": "Eine Zange zum sicheren Greifen heisser Tiegel.",
+            "Tondreieck": "Ein Dreieck aus Tonroehrchen zur Auflage von Tiegeln.",
+            "Abdampfschale": "Eine flache Schale zum Eindampfen von Loesungen.",
+            "Uhrglas": "Eine runde, gewoelbte Glasscheibe als Unterlage und Abdeckung.",
+            "Reibschale": "Eine Schale aus Porzellan zum Zerkleinern und Vermischen.",
+            "Pistill": "Ein Stoessel aus Porzellan fuer die Reibschale.",
+            "Saeurekappenflasche": "Eine Flasche mit saeurebestaendigem Verschluss.",
+            "U-Rohr": "Ein U-foermig gebogenes Glasrohr als Manometer oder Gaswaschgeraet.",
+            "Gummistopfen": "Stopfen aus Gummi zum Verschliessen von Flaschen und Rohren."
+        };
+
+        var canvas = document.getElementById("drawingCanvas");
+        var ctx = canvas.getContext("2d");
+        var isDrawing = false;
+        var currentColor = "#ffffff";
+        var currentSize = 3;
+        var currentTool = "pen";
+        var startX = 0;
+        var startY = 0;
+        var canvasImageData = null;
+
+        window.addEventListener("load", function() {
+            resizeCanvas();
+            populateDropdown();
+            populateOverview();
+        });
+
+        window.addEventListener("resize", resizeCanvas);
+
+        function resizeCanvas() {
+            var container = canvas.parentElement;
+            var containerWidth = container.clientWidth - 6;
+            var aspectRatio = 800 / 500;
+            
+            canvas.width = containerWidth;
+            canvas.height = containerWidth / aspectRatio;
+            canvas.style.width = "100%";
+            canvas.style.height = "auto";
+        }
+
+        function populateDropdown() {
+            var dropdown = document.getElementById("equipmentDropdown");
+            for (var i = 0; i < laborEquipment.length; i++) {
+                var option = document.createElement("option");
+                option.value = laborEquipment[i];
+                option.textContent = laborEquipment[i];
+                dropdown.appendChild(option);
+            }
+        }
+
+        function populateOverview() {
+            var grid = document.getElementById("equipmentGrid");
+            for (var i = 0; i < laborEquipment.length; i++) {
+                var item = document.createElement("div");
+                item.className = "equipment-item";
+                item.textContent = laborEquipment[i];
+                grid.appendChild(item);
+            }
+        }
+
+        function showEquipmentInfo() {
+            var dropdown = document.getElementById("equipmentDropdown");
+            var infoDiv = document.getElementById("equipmentInfo");
+            var imageDiv = document.getElementById("equipmentImage");
+            var titleElement = document.getElementById("equipmentTitle");
+            var descriptionElement = document.getElementById("equipmentDescription");
+            var imgElement = document.getElementById("equipmentImg");
+            
+            var selectedEquipment = dropdown.value;
+            
+            if (selectedEquipment && equipmentDescriptions[selectedEquipment]) {
+                titleElement.textContent = selectedEquipment;
+                descriptionElement.textContent = equipmentDescriptions[selectedEquipment];
+                infoDiv.style.display = "block";
+                
+                if (equipmentImages[selectedEquipment]) {
+                    imgElement.src = equipmentImages[selectedEquipment];
+                    imgElement.alt = selectedEquipment;
+                    imageDiv.style.display = "block";
+                } else {
+                    imageDiv.style.display = "none";
+                }
+            } else {
+                infoDiv.style.display = "none";
+                imageDiv.style.display = "none";
+            }
+        }
+
+        function toggleOverview() {
+            var content = document.getElementById("overviewContent");
+            var button = document.querySelector(".overview-toggle");
+            
+            if (content.style.display === "none" || content.style.display === "") {
+                content.style.display = "block";
+                button.textContent = "📋 Uebersicht ausblenden";
+            } else {
+                content.style.display = "none";
+                button.textContent = "📋 Komplette Uebersicht aller Laborgeraete anzeigen";
+            }
+        }
+
+        function generateRandomEquipment() {
+            var randomIndex = Math.floor(Math.random() * laborEquipment.length);
+            var randomEquipment = laborEquipment[randomIndex];
+            var nameField = document.getElementById("nameField");
+            
+            nameField.style.transform = "scale(0.8)";
+            nameField.style.opacity = "0.5";
+            
+            setTimeout(function() {
+                nameField.textContent = randomEquipment;
+                nameField.style.transform = "scale(1)";
+                nameField.style.opacity = "1";
+                nameField.style.transition = "all 0.3s ease";
+            }, 200);
+        }
+
+        function setTool(tool) {
+            currentTool = tool;
+            
+            var buttons = document.querySelectorAll(".tool-btn");
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+            
+            var toolNames = ["pen", "line", "rectangle", "triangle", "trapez", "ellipse"];
+            var toolLabels = ["Stift", "Linie", "Rechteck", "Dreieck", "Trapez", "Ellipse"];
+            var toolIndex = toolNames.indexOf(tool);
+            
+            if (toolIndex !== -1) {
+                var targetButton = null;
+                for (var i = 0; i < buttons.length; i++) {
+                    if (buttons[i].textContent.indexOf(toolLabels[toolIndex]) !== -1) {
+                        targetButton = buttons[i];
+                        break;
+                    }
+                }
+                if (targetButton) {
+                    targetButton.classList.add("active");
+                }
+            }
+        }
+
+        function getMousePos(e) {
+            var rect = canvas.getBoundingClientRect();
+            return {
+                x: (e.clientX - rect.left) * (canvas.width / rect.width),
+                y: (e.clientY - rect.top) * (canvas.height / rect.height)
+            };
+        }
+
+        function drawPreview(x, y) {
+            if (!isDrawing || currentTool === "pen") return;
+            
+            ctx.putImageData(canvasImageData, 0, 0);
+            
+            ctx.save();
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = currentSize;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            
+            if (currentTool === "line") {
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(x, y);
+            } else if (currentTool === "rectangle") {
+                var width = x - startX;
+                var height = y - startY;
+                ctx.rect(startX, startY, width, height);
+            } else if (currentTool === "triangle") {
+                // Dreieck: Spitze oben, Basis unten
+                var centerX = (startX + x) / 2;
+                ctx.moveTo(centerX, startY); // Spitze oben
+                ctx.lineTo(startX, y);       // Links unten
+                ctx.lineTo(x, y);            // Rechts unten
+                ctx.closePath();             // Zurück zur Spitze
+            } else if (currentTool === "trapez") {
+                // Trapez: schmale Seite oben, breite Seite unten
+                var width = Math.abs(x - startX);
+                var height = Math.abs(y - startY);
+                var offset = width * 0.25; // 25% Einzug oben
+                
+                var left = Math.min(startX, x);
+                var right = Math.max(startX, x);
+                var top = Math.min(startY, y);
+                var bottom = Math.max(startY, y);
+                
+                ctx.moveTo(left + offset, top);     // Oben links
+                ctx.lineTo(right - offset, top);    // Oben rechts
+                ctx.lineTo(right, bottom);          // Unten rechts
+                ctx.lineTo(left, bottom);           // Unten links
+                ctx.closePath();                    // Zurück zum Start
+            } else if (currentTool === "ellipse") {
+                var centerX = (startX + x) / 2;
+                var centerY = (startY + y) / 2;
+                var radiusX = Math.abs(x - startX) / 2;
+                var radiusY = Math.abs(y - startY) / 2;
+                ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
+            }
+            
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function drawFinal(x, y) {
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = currentSize;
+            ctx.setLineDash([]);
+            ctx.beginPath();
+            
+            if (currentTool === "line") {
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(x, y);
+            } else if (currentTool === "rectangle") {
+                var width = x - startX;
+                var height = y - startY;
+                ctx.rect(startX, startY, width, height);
+            } else if (currentTool === "triangle") {
+                // Dreieck: Spitze oben, Basis unten
+                var centerX = (startX + x) / 2;
+                ctx.moveTo(centerX, startY); // Spitze oben
+                ctx.lineTo(startX, y);       // Links unten
+                ctx.lineTo(x, y);            // Rechts unten
+                ctx.closePath();             // Zurück zur Spitze
+            } else if (currentTool === "trapez") {
+                // Trapez: schmale Seite oben, breite Seite unten
+                var width = Math.abs(x - startX);
+                var height = Math.abs(y - startY);
+                var offset = width * 0.25; // 25% Einzug oben
+                
+                var left = Math.min(startX, x);
+                var right = Math.max(startX, x);
+                var top = Math.min(startY, y);
+                var bottom = Math.max(startY, y);
+                
+                ctx.moveTo(left + offset, top);     // Oben links
+                ctx.lineTo(right - offset, top);    // Oben rechts
+                ctx.lineTo(right, bottom);          // Unten rechts
+                ctx.lineTo(left, bottom);           // Unten links
+                ctx.closePath();                    // Zurück zum Start
+            } else if (currentTool === "ellipse") {
+                var centerX = (startX + x) / 2;
+                var centerY = (startY + y) / 2;
+                var radiusX = Math.abs(x - startX) / 2;
+                var radiusY = Math.abs(y - startY) / 2;
+                ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
+            }
+            
+            ctx.stroke();
+        }
+
+        canvas.addEventListener("mousedown", startDrawing);
+        canvas.addEventListener("mousemove", draw);
+        canvas.addEventListener("mouseup", stopDrawing);
+        canvas.addEventListener("mouseout", stopDrawing);
+
+        canvas.addEventListener("touchstart", handleTouch);
+        canvas.addEventListener("touchmove", handleTouch);
+        canvas.addEventListener("touchend", stopDrawing);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            var pos = getMousePos(e);
+            startX = pos.x;
+            startY = pos.y;
+            
+            if (currentTool === "pen") {
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+            } else {
+                canvasImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            var pos = getMousePos(e);
+            
+            if (currentTool === "pen") {
+                ctx.lineWidth = currentSize;
+                ctx.lineCap = "round";
+                ctx.strokeStyle = currentColor;
+                ctx.setLineDash([]);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+            } else {
+                drawPreview(pos.x, pos.y);
+            }
+        }
+
+        function stopDrawing(e) {
+            if (!isDrawing) return;
+            isDrawing = false;
+            
+            if (currentTool !== "pen" && e) {
+                var pos = getMousePos(e);
+                drawFinal(pos.x, pos.y);
+            }
+            
+            ctx.beginPath();
+        }
+
+        function handleTouch(e) {
+            e.preventDefault();
+            var touch = e.touches[0];
+            var rect = canvas.getBoundingClientRect();
+            var x = (touch.clientX - rect.left) * (canvas.width / rect.width);
+            var y = (touch.clientY - rect.top) * (canvas.height / rect.height);
+            
+            if (e.type === "touchstart") {
+                startX = x;
+                startY = y;
+                isDrawing = true;
+                
+                if (currentTool === "pen") {
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                } else {
+                    canvasImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                }
+            } else if (e.type === "touchmove" && isDrawing) {
+                if (currentTool === "pen") {
+                    ctx.lineWidth = currentSize;
+                    ctx.lineCap = "round";
+                    ctx.strokeStyle = currentColor;
+                    ctx.setLineDash([]);
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                } else {
+                    drawPreview(x, y);
+                }
+            } else if (e.type === "touchend" && isDrawing) {
+                isDrawing = false;
+                if (currentTool !== "pen") {
+                    drawFinal(x, y);
+                }
+            }
+        }
+
+        document.getElementById("colorPicker").addEventListener("change", function(e) {
+            currentColor = e.target.value;
+        });
+
+        document.getElementById("sizeSlider").addEventListener("input", function(e) {
+            currentSize = e.target.value;
+        });
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function exportToPDF() {
+            var jsPDF = window.jspdf.jsPDF;
+            var pdf = new jsPDF();
+            
+            var nameField = document.getElementById("nameField");
+            var equipmentName = nameField.textContent;
+            
+            if (equipmentName === "Hier erscheint der Name des Laborgeraets...") {
+                alert("Bitte erst den Zufallsgenerator verwenden!");
+                return;
+            }
+            
+            pdf.setFontSize(20);
+            pdf.text("Laborgeraet: " + equipmentName, 20, 30);
+            
+            pdf.setFontSize(12);
+            var date = new Date().toLocaleDateString("de-DE");
+            pdf.text("Datum: " + date, 20, 45);
+            
+            var canvasImg = canvas.toDataURL("image/png");
+            pdf.addImage(canvasImg, "PNG", 20, 60, 170, 106);
+            
+            pdf.save("Laborgeraet_" + equipmentName.replace(/\s+/g, "_") + ".pdf");
+        }
+    </script>
+</body>
+</html>
